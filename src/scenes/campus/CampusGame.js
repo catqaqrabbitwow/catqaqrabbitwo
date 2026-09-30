@@ -675,6 +675,14 @@ export class CampusGame extends BaseScene {
     this.nearest = !g.dialogue.active && !this.player.locked && !this.combatOn ? this._findNearest() : this.combatOn ? null : null;
     if (this.combatOn) this.nearest = null;
     this.hud.prompt(this.nearest ? this.nearest.verb : null, this.nearest ? this.nearest.name : '');
+    // cursor language: talk near NPCs, enter near doors, aim in combat
+    if (!g.ui.hasModal && !g.dialogue.active) {
+      if (this.combatOn) g.cursor.set('aim');
+      else if (this.nearest && this.nearest.type === 'npc') g.cursor.set('talk', `<b>E</b>${this.nearest.name}`);
+      else if (this.nearest && this.nearest.type === 'door') g.cursor.set('enter', `<b>E</b>${this.nearest.name}`);
+      else if (this.nearest) g.cursor.set('pick', `<b>E</b>${this.nearest.name}`);
+      else g.cursor.set('default');
+    } else g.cursor.set('default');
 
     // world
     a.update(t);

@@ -24,6 +24,7 @@ export class BaseScene {
   enter() {}
 
   exit() {
+    this.game.cursor.set('default');
     this._unsubs.forEach((u) => u());
     this._unsubs = [];
   }

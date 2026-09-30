@@ -11,6 +11,7 @@ await page.goto(url, { waitUntil: 'load' });
 for (const a of actions) {
   if (a.wait) await page.waitForTimeout(a.wait);
   if (a.click) await page.mouse.click(a.click[0], a.click[1]);
+  if (a.rclick) await page.mouse.click(a.rclick[0], a.rclick[1], { button: 'right' });
   if (a.move) await page.mouse.move(a.move[0], a.move[1], { steps: 4 });
   if (a.key) await page.keyboard.press(a.key);
   if (a.down) await page.keyboard.down(a.down);

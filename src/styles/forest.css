@@ -1,0 +1,256 @@
+/* ============================ FOREST HUD ============================ */
+.fhud {
+  position: absolute;
+  inset: 0;
+  color: #efe8d8;
+}
+
+.fhud-title {
+  position: absolute;
+  left: 5.6rem;
+  top: 4.2rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+}
+
+.fhud-title .t-cond {
+  font-size: 1.1rem;
+  letter-spacing: 0.34em;
+  color: #b9a4ff;
+}
+
+.fhud-title__zh {
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+}
+
+.fhud-title .t-italic {
+  font-size: 1.8rem;
+  opacity: 0.7;
+}
+
+.fhud-quest {
+  position: absolute;
+  left: 5.2rem;
+  top: 10.6rem;
+}
+
+.fhud-seeds {
+  position: absolute;
+  left: 50%;
+  top: 4rem;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fhud-seed {
+  width: 4.2rem;
+  height: 4.2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(10, 14, 20, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(239, 232, 216, 0.3);
+  color: rgba(239, 232, 216, 0.25);
+}
+
+.fhud-seed i {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.fhud-seed.is-on {
+  color: #fffbe8;
+  background: radial-gradient(circle, rgba(200, 230, 255, 0.5), rgba(10, 14, 20, 0.6) 70%);
+  box-shadow: inset 0 0 0 1px rgba(207, 232, 255, 0.8), 0 0 2rem rgba(180, 220, 255, 0.6);
+}
+
+.fhud-seeds__lbl {
+  font-size: 1.05rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  margin-left: 0.6rem;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+.fhud-life {
+  position: absolute;
+  left: 5.6rem;
+  bottom: 5rem;
+}
+
+.fhud-hearts {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.fhud-heart {
+  --fill: 1;
+  position: relative;
+  width: 4rem;
+  height: 3.7rem;
+  transition: transform 0.2s var(--ease-back);
+}
+
+.fhud-heart svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: rgba(20, 10, 16, 0.75);
+  stroke: #0e0a10;
+  stroke-width: 2;
+  overflow: visible;
+}
+
+.fhud-heart i {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #ff6a6a, #c02a3a);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21 2.5 11.3A5.6 5.6 0 0 1 12 4.6a5.6 5.6 0 0 1 9.5 6.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21 2.5 11.3A5.6 5.6 0 0 1 12 4.6a5.6 5.6 0 0 1 9.5 6.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+  clip-path: inset(calc((1 - var(--fill)) * 100%) 0 0 0);
+  filter: drop-shadow(0 0 0.6rem rgba(255, 80, 90, 0.6));
+}
+
+.fhud-heart.is-empty {
+  transform: scale(0.86);
+}
+
+.fhud-skills {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.4rem;
+  align-items: center;
+}
+
+.fhud-skill {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+.fhud-skill .t-zh {
+  font-size: 1.35rem;
+  letter-spacing: 0.16em;
+}
+
+.fhud-skill svg {
+  width: 4.4rem;
+  height: 4.4rem;
+  margin-right: 0.8rem;
+}
+
+.fhud-skill .bg {
+  fill: rgba(10, 8, 16, 0.6);
+  stroke: rgba(239, 232, 216, 0.3);
+}
+
+.fhud-skill .arc {
+  fill: none;
+  stroke: #b58aff;
+  stroke-width: 3;
+  stroke-dasharray: 100 100;
+  transform: rotate(-90deg);
+  transform-origin: 22px 22px;
+}
+
+.fhud-skill--burst.is-ready svg {
+  filter: drop-shadow(0 0 0.8rem rgba(170, 120, 255, 0.9));
+}
+
+.fhud-boss {
+  position: absolute;
+  left: 50%;
+  bottom: 6rem;
+  width: 72rem;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+.fhud-boss__name {
+  display: flex;
+  align-items: baseline;
+  gap: 1.4rem;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+}
+
+.fhud-boss__zh {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #e4ccff;
+}
+
+.fhud-boss__name .t-cond {
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  opacity: 0.7;
+}
+
+.fhud-boss__bar {
+  position: relative;
+  height: 1rem;
+  background: rgba(10, 6, 16, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(228, 204, 255, 0.5);
+}
+
+.fhud-boss__bar i {
+  position: absolute;
+  inset: 2px;
+  transform-origin: 0 50%;
+}
+
+.fhud-boss__bar .lag {
+  background: #f0e4ff;
+  opacity: 0.6;
+}
+
+.fhud-boss__bar .fill {
+  background: linear-gradient(90deg, #6a2ad0, #c08aff);
+}
+
+.fhud-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 14rem;
+  transform: translateX(-50%) translateY(1rem);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2.4rem 1rem 1.6rem;
+  background: linear-gradient(90deg, rgba(10, 12, 16, 0), rgba(10, 12, 16, 0.75) 20%, rgba(10, 12, 16, 0.75) 80%, rgba(10, 12, 16, 0));
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.3s var(--ease-back);
+  font-size: 1.6rem;
+  letter-spacing: 0.2em;
+  white-space: nowrap;
+}
+
+.fhud-prompt.is-on {
+  opacity: 1;
+  transform: translateX(-50%);
+}
+
+.fhud-prompt .keycap {
+  border-color: #cfe8ff;
+  color: #cfe8ff;
+}
+
+.fhud-help {
+  position: absolute;
+  right: 5.6rem;
+  top: 4.6rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.3em;
+  opacity: 0.75;
+  display: flex;
+  align-items: center;
+}
