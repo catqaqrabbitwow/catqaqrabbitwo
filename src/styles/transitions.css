@@ -1,0 +1,568 @@
+/* ============================== Title ============================== */
+.title {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  color: var(--ivory);
+}
+
+.title__half {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50.2%;
+  background-size: 51.2rem;
+  background-color: #141210;
+}
+
+.title__half--top {
+  top: 0;
+  box-shadow: 0 1px 0 rgba(220, 192, 132, 0.25);
+}
+
+.title__half--bot {
+  bottom: 0;
+}
+
+.title__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.title__edition {
+  font-size: 1.2rem;
+  letter-spacing: 0.4em;
+  color: rgba(220, 192, 132, 0.7);
+  margin-bottom: 2.4rem;
+}
+
+.title__emblem .emblem {
+  width: 24rem;
+  height: 24rem;
+  opacity: 0.9;
+}
+
+.title__name {
+  font-size: 9.6rem;
+  font-weight: 500;
+  font-style: italic;
+  margin: 1.2rem 0 0.4rem;
+  letter-spacing: -0.01em;
+  color: #efe4c8;
+}
+
+.title__zh {
+  font-size: 2.2rem;
+  letter-spacing: 0.9em;
+  margin-left: 0.9em;
+  color: var(--brass-l);
+  margin-bottom: 1.8rem;
+}
+
+.title__sub {
+  margin-top: 1.4rem;
+  font-size: 2rem;
+  color: rgba(235, 226, 204, 0.6);
+}
+
+.title__prompt {
+  position: relative;
+  height: 6rem;
+  margin-top: 5rem;
+}
+
+.title__status {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.34em;
+  color: rgba(235, 226, 204, 0.55);
+  transition: opacity 0.35s;
+}
+
+.title__spin {
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 1px solid rgba(220, 192, 132, 0.6);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.title.is-ready .title__status {
+  opacity: 0;
+}
+
+.title__enter {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  opacity: 0;
+  white-space: nowrap;
+}
+
+.title__enter .t-cond {
+  font-size: 1.5rem;
+  letter-spacing: 0.5em;
+  color: #efe4c8;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+.title__enter .t-zh {
+  font-size: 1.3rem;
+  letter-spacing: 0.4em;
+  color: rgba(235, 226, 204, 0.55);
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+.title__corner {
+  position: absolute;
+  font-size: 1.1rem;
+  letter-spacing: 0.32em;
+  color: rgba(235, 226, 204, 0.4);
+}
+
+.title__corner--tl { left: 4.8rem; top: 4rem; }
+.title__corner--tr { right: 4.8rem; top: 4rem; }
+.title__corner--bl { left: 4.8rem; bottom: 4rem; }
+.title__corner--br { right: 4.8rem; bottom: 4rem; }
+
+.deco-rule {
+  position: relative;
+  display: block;
+  height: 1px;
+  margin: 0.6rem auto;
+  background: linear-gradient(90deg, transparent, currentColor 20%, currentColor 80%, transparent);
+  opacity: 0.55;
+}
+
+.deco-rule i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  background: currentColor;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* ========================== Transition card ========================== */
+.tx {
+  position: absolute;
+  inset: 0;
+  perspective: 1400px;
+  pointer-events: auto;
+}
+
+.tx-card {
+  --wipe: 0;
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+  box-shadow: 0 3rem 8rem rgba(0, 0, 0, 0.7);
+  background-size: 51.2rem;
+  clip-path: polygon(calc(var(--wipe) * 1%) 0, 100% 0, 100% 100%, calc(var(--wipe) * 1% - 40%) 100%);
+  overflow: hidden;
+}
+
+.tx-card__edge {
+  position: absolute;
+  inset: 1.6rem;
+  border: 1px solid currentColor;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.tx-card__edge::before {
+  content: '';
+  position: absolute;
+  inset: 0.5rem;
+  border: 1px solid currentColor;
+  opacity: 0.5;
+}
+
+.tx-card__inner {
+  position: absolute;
+  inset: 0;
+}
+
+/* archive card */
+.tx-card--archive {
+  color: var(--ivory);
+  background-color: #171513;
+}
+
+.txa {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.txa__emblem {
+  position: absolute;
+  opacity: 0.12;
+  transform: scale(2.6);
+}
+
+.txa__meta {
+  font-size: 1.3rem;
+  letter-spacing: 0.4em;
+  color: var(--brass-l);
+  opacity: 0.8;
+}
+
+.txa__title {
+  font-size: 11rem;
+  font-style: italic;
+  font-weight: 500;
+  margin: 1.6rem 0 0.6rem;
+}
+
+.txa__zh {
+  font-size: 2.6rem;
+  letter-spacing: 0.8em;
+  margin-left: 0.8em;
+  color: var(--brass-l);
+  margin-bottom: 1.6rem;
+}
+
+.txa__rows {
+  margin-top: 3rem;
+  width: 76rem;
+  font-size: 1.5rem;
+}
+
+.txa__row {
+  display: grid;
+  grid-template-columns: 6rem 1fr 16rem;
+  padding: 1rem 0;
+  border-bottom: 1px dotted rgba(235, 226, 204, 0.3);
+  letter-spacing: 0.08em;
+}
+
+.txa__row span:last-child {
+  text-align: right;
+  color: var(--brass-l);
+}
+
+/* student-file card */
+.tx-card--photo {
+  color: var(--ink);
+  background-color: var(--cream);
+}
+
+.txp {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 7rem;
+  align-items: center;
+  padding: 0 12rem;
+}
+
+.txp__left {
+  position: relative;
+}
+
+.txp__photo {
+  background: #f4efe3;
+  padding: 2rem 2rem 7rem;
+  box-shadow: var(--shadow-lift);
+  transform: rotate(-3deg);
+}
+
+.txp__photo img {
+  display: block;
+  width: 100%;
+}
+
+.txp__caption {
+  position: absolute;
+  left: 4rem;
+  bottom: 2.4rem;
+  font-size: 2.2rem;
+  transform: rotate(-3deg);
+  color: #3a2f25;
+}
+
+.txp__clip {
+  left: 42%;
+  top: -3.2rem;
+  transform: rotate(4deg);
+}
+
+.txp__meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  letter-spacing: 0.36em;
+  opacity: 0.65;
+}
+
+.txp__title {
+  font-size: 9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-top: 2rem;
+  line-height: 1.1;
+}
+
+.txp__en {
+  font-size: 4rem;
+  font-style: italic;
+  font-weight: 500;
+  margin: 0.4rem 0 2.2rem;
+  opacity: 0.8;
+}
+
+.txp__lines {
+  margin-top: 2.4rem;
+  font-size: 1.55rem;
+  line-height: 2.6;
+}
+
+.txp__lines b {
+  display: inline-block;
+  width: 7rem;
+  font-weight: 500;
+  color: var(--wine);
+}
+
+.txp__stamp {
+  position: relative;
+  display: inline-block;
+  margin-top: 3rem;
+  font-size: 2.2rem;
+  transform: rotate(-9deg);
+}
+
+.txp__dev {
+  position: absolute;
+  right: 6rem;
+  bottom: 5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.36em;
+  opacity: 0.6;
+}
+
+.txp__dev-dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: var(--wine);
+  animation: breathe 1s ease-in-out infinite;
+}
+
+/* storybook card */
+.tx-card--book {
+  color: var(--ink);
+  background: radial-gradient(ellipse at 50% 40%, #243a33, #0d1614 75%);
+}
+
+.txb {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  perspective: 2200px;
+}
+
+.txb__book {
+  position: relative;
+  width: 140rem;
+  height: 84rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  transform-style: preserve-3d;
+  box-shadow: 0 4rem 8rem rgba(0, 0, 0, 0.6);
+}
+
+.txb__page {
+  position: relative;
+  overflow: hidden;
+}
+
+.txb__page--l {
+  padding: 9rem 8rem;
+  text-align: center;
+  box-shadow: inset -3rem 0 4rem -2rem rgba(60, 40, 20, 0.35);
+}
+
+.txb__page--r {
+  box-shadow: inset 3rem 0 4rem -2rem rgba(60, 40, 20, 0.35);
+}
+
+.txb__page--r img {
+  position: absolute;
+  inset: 5rem;
+  width: calc(100% - 10rem);
+  height: calc(100% - 10rem);
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(26, 24, 21, 0.4);
+}
+
+.txb__chapter {
+  font-size: 1.4rem;
+  letter-spacing: 0.5em;
+  color: var(--wine);
+}
+
+.txb__title {
+  font-size: 6.4rem;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.05;
+  margin: 3rem 0 1.4rem;
+}
+
+.txb__zh {
+  font-size: 3rem;
+  letter-spacing: 0.5em;
+  font-weight: 700;
+  margin-bottom: 1.4rem;
+}
+
+.txb__text {
+  font-size: 2rem;
+  line-height: 2.2;
+  letter-spacing: 0.14em;
+  margin-top: 4rem;
+}
+
+.txb__folio {
+  position: absolute;
+  bottom: 4rem;
+  left: 0;
+  right: 0;
+  font-size: 1.3rem;
+  opacity: 0.5;
+}
+
+.txb__flip {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.txb__flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+}
+
+.txb__dev {
+  position: absolute;
+  bottom: 4.4rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.4em;
+  color: rgba(235, 226, 204, 0.6);
+}
+
+/* lobby return card */
+.tx-card--lobby {
+  color: var(--ivory);
+  background-color: #151311;
+}
+
+.txl {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.txl__title {
+  font-size: 7.2rem;
+  font-style: italic;
+  font-weight: 500;
+  margin: 2rem 0 0.6rem;
+}
+
+.txl__zh {
+  font-size: 2.2rem;
+  letter-spacing: 0.7em;
+  margin-left: 0.7em;
+  color: var(--brass-l);
+  margin-bottom: 1.4rem;
+}
+
+.txl__sub {
+  font-size: 2rem;
+  opacity: 0.6;
+  margin-top: 1rem;
+}
+
+.txl__emblem .emblem {
+  width: 22rem;
+  height: 22rem;
+}
+
+/* ============================ Area swipe ============================ */
+.swipe {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.swipe__sheet {
+  position: absolute;
+  inset: 0 -10%;
+  display: grid;
+  place-items: center;
+  background-size: 51.2rem;
+  background-color: #141210;
+  box-shadow: 0 0 6rem rgba(0, 0, 0, 0.8);
+}
+
+.swipe__label {
+  text-align: center;
+  color: var(--ivory);
+}
+
+.swipe__zh {
+  font-size: 4.2rem;
+  letter-spacing: 0.5em;
+  margin-left: 0.5em;
+  font-weight: 600;
+}
+
+.swipe__en {
+  font-size: 1.4rem;
+  letter-spacing: 0.5em;
+  color: var(--brass-l);
+  margin-top: 1rem;
+}

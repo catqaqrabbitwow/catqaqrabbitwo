@@ -1,0 +1,386 @@
+/* ============================ Dialogue ============================ */
+.dlg {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  display: none;
+}
+
+.dlg.is-on {
+  display: block;
+  pointer-events: auto;
+}
+
+.dlg__shade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  opacity: 0;
+  background: linear-gradient(180deg, rgba(8, 7, 6, 0) 0%, rgba(8, 7, 6, 0.55) 45%, rgba(8, 7, 6, 0.82) 100%);
+}
+
+.dlg__box {
+  position: absolute;
+  left: 50%;
+  bottom: 7.6rem;
+  width: 112rem;
+  transform: translateX(-50%);
+  color: #f1e8d4;
+}
+
+.dlg__name-row {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.dlg__rule {
+  width: 4rem;
+  height: 1px;
+  background: rgba(220, 192, 132, 0.8);
+  position: relative;
+}
+
+.dlg__rule::after {
+  content: '';
+  position: absolute;
+  right: -0.3rem;
+  top: -0.3rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: var(--brass-l);
+  transform: rotate(45deg);
+}
+
+.dlg__rule--long {
+  flex: 1;
+  opacity: 0.35;
+}
+
+.dlg__rule--long::after {
+  display: none;
+}
+
+.dlg__name {
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.6);
+}
+
+.dlg__name-en {
+  font-size: 1.2rem;
+  letter-spacing: 0.36em;
+  color: var(--brass-l);
+}
+
+.dlg.is-narration .dlg__name-row {
+  opacity: 0.35;
+}
+
+.dlg__text {
+  min-height: 9rem;
+  padding: 0 4rem 0 5.4rem;
+  font-size: 2.5rem;
+  line-height: 1.75;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.75);
+}
+
+.dlg.is-narration .dlg__text {
+  font-style: italic;
+  color: #d9d0bc;
+  text-align: center;
+  padding: 0 8rem;
+}
+
+.dlg__ch {
+  opacity: 0;
+  transition: opacity 0.18s ease-out;
+}
+
+.dlg__ch.is-on {
+  opacity: 1;
+}
+
+.dlg__next {
+  position: absolute;
+  right: 2rem;
+  bottom: -3.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.34em;
+  color: rgba(235, 226, 204, 0.7);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.dlg__next.is-on {
+  opacity: 1;
+}
+
+.dlg__next i {
+  width: 0;
+  height: 0;
+  border-left: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+  border-top: 0.7rem solid var(--brass-l);
+  animation: nextBob 0.9s ease-in-out infinite;
+}
+
+@keyframes nextBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(0.4rem); }
+}
+
+.dlg__choices {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.8rem;
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  margin-bottom: 3rem;
+}
+
+.dlg__choice {
+  color: var(--ivory);
+}
+
+.dlg__choice-in {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  min-width: 40rem;
+  padding: 1.2rem 2.4rem;
+  background: linear-gradient(90deg, rgba(14, 12, 10, 0.3), rgba(14, 12, 10, 0.78));
+  box-shadow: inset 0 0 0 1px rgba(220, 192, 132, 0.35);
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+}
+
+.dlg__choice-in .t-mono {
+  font-size: 1.2rem;
+  color: var(--brass-l);
+}
+
+/* ============================ Quest tracker ============================ */
+.qtrack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.qtrack__card {
+  position: relative;
+  width: 36rem;
+  padding: 1.3rem 1.8rem 1.4rem 2rem;
+  color: var(--ink);
+  background-color: var(--cream);
+  background-image: var(--tex-cream);
+  background-size: 51.2rem;
+  box-shadow: var(--shadow-paper);
+  border-left: 0.5rem solid var(--wine);
+  transform: rotate(-0.8deg);
+}
+
+.qtrack__card::after {
+  content: '';
+  position: absolute;
+  inset: 0.45rem;
+  border: 1px solid rgba(26, 24, 21, 0.2);
+  pointer-events: none;
+}
+
+.qtrack__card.is-done {
+  border-left-color: var(--moss);
+  opacity: 0.8;
+}
+
+.qtrack__tag {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+}
+
+.qtrack__title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin: 0.2rem 0 0.4rem;
+}
+
+.qtrack__obj {
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+}
+
+.qtrack__count {
+  display: inline-block;
+  margin-left: 0.6rem;
+  padding: 0 0.6rem;
+  background: var(--ink);
+  color: var(--ivory);
+  font-size: 1.2rem;
+}
+
+.qtrack__en {
+  font-size: 1rem;
+  letter-spacing: 0.22em;
+  opacity: 0.5;
+  margin-top: 0.3rem;
+}
+
+/* ============================ Quest banner ============================ */
+.qbanner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(8, 7, 6, 0.35), rgba(8, 7, 6, 0) 60%);
+}
+
+.qbanner__slip {
+  position: relative;
+  min-width: 64rem;
+  padding: 3rem 5rem 3.4rem;
+  color: var(--ink);
+  text-align: center;
+  box-shadow: var(--shadow-lift);
+  background-size: 51.2rem;
+}
+
+.qbanner__edge {
+  position: absolute;
+  inset: 1rem;
+  border: 1px solid rgba(26, 24, 21, 0.35);
+}
+
+.qbanner__edge::after {
+  content: '';
+  position: absolute;
+  inset: 0.4rem;
+  border: 1px solid rgba(26, 24, 21, 0.18);
+}
+
+.qbanner__head {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.34em;
+  opacity: 0.6;
+}
+
+.qbanner__dots {
+  flex: 1;
+  height: 1px;
+  background-image: linear-gradient(90deg, rgba(26, 24, 21, 0.5) 50%, transparent 50%);
+  background-size: 0.6rem 1px;
+}
+
+.qbanner__en {
+  font-size: 7rem;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1;
+  margin-top: 2rem;
+}
+
+.qbanner--start .qbanner__en {
+  font-size: 5.4rem;
+}
+
+.qbanner__zh {
+  font-size: 2.2rem;
+  letter-spacing: 0.8em;
+  margin: 1.2rem 0 1.6rem 0.8em;
+  font-weight: 700;
+  color: var(--wine);
+}
+
+.qbanner__title {
+  font-size: 2.2rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.qbanner__title .t-cond {
+  display: block;
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  font-weight: 400;
+  margin-top: 0.4rem;
+}
+
+.qbanner__reward {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  margin-top: 2rem;
+  padding: 0.8rem 2rem;
+  box-shadow: inset 0 0 0 1px rgba(26, 24, 21, 0.4);
+}
+
+.qbanner__reward .t-cond {
+  font-size: 1.05rem;
+  letter-spacing: 0.26em;
+  opacity: 0.6;
+}
+
+.qbanner__reward b {
+  font-size: 2rem;
+  letter-spacing: 0.14em;
+}
+
+.qbanner__lv {
+  margin-top: 1.4rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  color: var(--wine);
+}
+
+.qbanner__stamp {
+  right: 4rem;
+  top: 5rem;
+  font-size: 2.2rem;
+}
+
+/* ============================ Damage numbers ============================ */
+.dmg-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dmg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: -1.2rem 0 0 -2rem;
+  font-family: var(--f-title);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 2.2rem;
+  color: #f4ead2;
+  text-shadow: 0 0.1rem 0 rgba(0, 0, 0, 0.8), 0 0 1rem rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  white-space: nowrap;
+}
+
+.dmg.is-crit {
+  font-size: 3rem;
+  color: #f2c46a;
+}
