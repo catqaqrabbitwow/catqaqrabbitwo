@@ -149,6 +149,7 @@ export class DialogueManager {
   end() {
     if (!this.active) return;
     this.active = false;
+    this.endedAt = performance.now();
     this.game.audio.play('close');
     gsap.to(this.el.querySelector('.dlg__box'), { opacity: 0, y: 14, duration: 0.3, ease: 'power2.in', onComplete: () => this.el.classList.remove('is-on') });
     gsap.to(this.el.querySelector('.dlg__shade'), { opacity: 0, duration: 0.4 });

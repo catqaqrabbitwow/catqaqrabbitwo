@@ -37,6 +37,8 @@ function mats() {
     chairLeg: std({ color: 0x8a908c, roughness: 0.4, metalness: 0.6 }),
     deskTop: std({ map: CA.woodTex(7, [196, 150, 104]), roughness: 0.5 }),
     glass: new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.08, roughness: 0.05, depthWrite: false }),
+    fgDark: std({ color: 0x5e4c4a, roughness: 0.95 }),
+    fgFrame: std({ color: 0x2e2422, roughness: 0.7 }),
   };
   return _mats;
 }
@@ -49,7 +51,7 @@ function planeTex(tex, w, h, o = {}) {
 }
 
 /** Sky backdrop far behind the windows. */
-function skyBackdrop(group, tex, { z = -14, w = 60, h = 26, y = 6, x = 0, boost = 1.35 } = {}) {
+function skyBackdrop(group, tex, { z = -14, w = 60, h = 26, y = 6, x = 0, boost = 1.0 } = {}) {
   const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: tex, fog: false, color: new THREE.Color(boost, boost, boost) }));
   m.position.set(x, y, z);
   group.add(m);
@@ -229,7 +231,7 @@ export function buildCorridor(res) {
   // floor
   const floorTex = CA.schoolFloor(1024, 1024, 4);
   floorTex.repeat.set(8, 1.6);
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(X1 - X0 + 4, 6), std({ map: floorTex, roughness: 0.28, metalness: 0.05, color: 0xf0e0d0 }));
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(X1 - X0 + 4, 6), std({ map: floorTex, roughness: 0.48, metalness: 0.0, color: 0xd8c4b0 }));
   floor.rotation.x = -Math.PI / 2;
   floor.position.set(0, 0, 0.6);
   floor.receiveShadow = true;
@@ -325,12 +327,12 @@ export function buildCorridor(res) {
   const doorXs = [-9.5, -2.5, 4.5];
   const plateNames = ['2-A', '2-B', '2-C'];
   const fgZ = 1.75;
-  for (let x = X0; x <= X1; x += 7) fg.add(new THREE.BoxGeometry(0.45, 3.4, 0.45), M.wallPlain, [x + 3.5 - 7, 1.7, fgZ + 0.2]);
+  [-16.2, -6.2, 1.2, 7.8, 16.2].forEach((x) => fg.add(new THREE.BoxGeometry(0.34, 3.4, 0.34), M.fgDark, [x, 1.7, fgZ + 0.25]));
   doorXs.forEach((x) => {
-    fg.add(new THREE.BoxGeometry(0.12, 2.1, 0.2), M.darkFrame, [x - 0.95, 1.05, fgZ]);
-    fg.add(new THREE.BoxGeometry(0.12, 2.1, 0.2), M.darkFrame, [x + 0.95, 1.05, fgZ]);
-    fg.add(new THREE.BoxGeometry(2.02, 0.14, 0.2), M.darkFrame, [x, 2.12, fgZ]);
-    fg.add(new THREE.BoxGeometry(2.4, 1.2, 0.2), M.wallPlain, [x, 2.8, fgZ + 0.02]);
+    fg.add(new THREE.BoxGeometry(0.1, 2.1, 0.16), M.fgFrame, [x - 0.95, 1.05, fgZ]);
+    fg.add(new THREE.BoxGeometry(0.1, 2.1, 0.16), M.fgFrame, [x + 0.95, 1.05, fgZ]);
+    fg.add(new THREE.BoxGeometry(2.0, 0.12, 0.16), M.fgFrame, [x, 2.12, fgZ]);
+    fg.add(new THREE.BoxGeometry(2.3, 1.2, 0.16), M.fgDark, [x, 2.8, fgZ + 0.02]);
   });
   fg.build(group, { cast: false });
   const plates = doorXs.map((x, i) => {
@@ -371,7 +373,7 @@ export function buildCorridor(res) {
   const shafts = [];
   wins.forEach((x) => {
     for (let k = 0; k < 2; k++) {
-      const s = createShaft({ from: new THREE.Vector3(x - 0.6 + k * 1.2, 2.7, Z + 0.1), dir: sunDir, length: 5.5, width: 1.2, color: 0xffc080, opacity: 0.06 });
+      const s = createShaft({ from: new THREE.Vector3(x - 0.6 + k * 1.2, 2.7, Z + 0.1), dir: sunDir, length: 4.2, width: 1.0, color: 0xffc080, opacity: 0.032 });
       group.add(s);
       shafts.push(s);
     }
@@ -385,12 +387,12 @@ export function buildCorridor(res) {
     name: '二樓 西側走廊',
     nameEn: 'WEST CORRIDOR · 2F',
     bounds: { xMin: X0 + 0.8, xMax: X1 - 0.8, zMin: -1.0, zMax: 0.9 },
-    cam: { y: 1.95, z: 7.2, lookY: 1.25, lookZ: -1.0, fov: 32, xMin: X0 + 4.2, xMax: X1 - 4.2, dist: 8.2 },
+    cam: { y: 2.25, z: 6.6, lookY: 1.12, lookZ: -1.2, fov: 34, xMin: X0 + 4.4, xMax: X1 - 4.4, dist: 8.2 },
     floor: 'tile',
     sunDir,
-    sun: { color: 0xffae6a, intensity: 4.2 },
-    hemi: { sky: 0x9a94c0, ground: 0xc09070, intensity: 1.05 },
-    fog: { color: 0xe8b890, density: 0.012 },
+    sun: { color: 0xffae6a, intensity: 3.6 },
+    hemi: { sky: 0x8a86b4, ground: 0xa87a60, intensity: 0.75 },
+    fog: { color: 0xb88870, density: 0.005 },
     doors: [
       { id: 'toClass', x: -2.5, z: 0.7, to: 'classroom', spawn: { x: 5.2, z: 1.9 }, label: '二年B組', labelEn: 'CLASS 2-B', mode: 'enter' },
       { id: 'toClassA', x: -9.5, z: 0.7, locked: '二年A組的門鎖著。裡面已經沒有人了。', label: '二年A組', labelEn: 'CLASS 2-A', mode: 'enter' },
@@ -436,10 +438,18 @@ export function buildClassroom(res) {
   floor.position.set(0, 0, 0);
   floor.receiveShadow = true;
   group.add(floor);
-  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(X1 - X0, 10), M.ceiling);
+  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(X1 - X0 + 6, 22), M.ceiling);
   ceil.rotation.x = Math.PI / 2;
-  ceil.position.y = 3.3;
+  ceil.position.set(0, 3.3, 6);
   group.add(ceil);
+  // front beam + fluorescent fixtures (seen at the top edge of the frame)
+  const fb = new Batcher();
+  fb.add(new THREE.BoxGeometry(X1 - X0 + 6, 0.35, 0.3), M.wallPlain, [0, 3.15, 5.2]);
+  for (const x of [-4.5, 0, 4.5]) for (const z of [-2.5, 1.5]) {
+    fb.add(new THREE.BoxGeometry(1.3, 0.06, 0.22), M.frame, [x, 3.26, z]);
+    fb.add(new THREE.CylinderGeometry(0.035, 0.035, 1.2, 8), M.lampTube, [x, 3.2, z], [0, 0, Math.PI / 2]);
+  }
+  fb.build(group, { cast: false });
 
   const wins = windowWall(group, M, { x0: X0, x1: X1, z: Z, bay: 3.75, winW: 3.1, sill: 0.9, top: 2.95, height: 3.3 });
   skyBackdrop(group, res.sky2, { z: -18, w: 70, h: 30, y: 5 });
@@ -519,7 +529,7 @@ export function buildClassroom(res) {
   b.add(new THREE.BoxGeometry(0.5, 0.1, 0.35), bookMats[2], [-5.5, 0.85, -1.4]);
   b.add(new THREE.BoxGeometry(1.2, 0.18, 4.4), M.wood, [-6.9, 0.09, -1.2]);
   // lockers at the back (camera side, right)
-  b.add(new THREE.BoxGeometry(3.4, 1.1, 0.45), M.metal, [4.8, 0.55, 3.7]);
+  b.add(new THREE.BoxGeometry(3.4, 1.1, 0.45), M.steel, [4.8, 0.55, 3.7]);
   // cleaning cabinet
   b.add(new THREE.BoxGeometry(0.8, 1.9, 0.5), M.steel, [6.9, 0.95, -4.3]);
   b.build(group);
@@ -545,7 +555,7 @@ export function buildClassroom(res) {
   const shafts = [];
   wins.forEach((x) => {
     for (let k = 0; k < 2; k++) {
-      const s = createShaft({ from: new THREE.Vector3(x - 0.7 + k * 1.4, 2.8, Z + 0.1), dir: sunDir, length: 7, width: 1.4, color: 0xffc27e, opacity: 0.07 });
+      const s = createShaft({ from: new THREE.Vector3(x - 0.7 + k * 1.4, 2.8, Z + 0.1), dir: sunDir, length: 5.5, width: 1.2, color: 0xffc27e, opacity: 0.035 });
       group.add(s);
       shafts.push(s);
     }
@@ -566,9 +576,9 @@ export function buildClassroom(res) {
     cam: { y: 2.9, z: 9.6, lookY: 1.0, lookZ: -1.6, fov: 34, xMin: -2.2, xMax: 2.2, dist: 10.5, followZ: 0.35 },
     floor: 'wood',
     sunDir,
-    sun: { color: 0xffb070, intensity: 4.6 },
-    hemi: { sky: 0x9a90c0, ground: 0xc08a68, intensity: 1.0 },
-    fog: { color: 0xecbc92, density: 0.014 },
+    sun: { color: 0xffb070, intensity: 3.8 },
+    hemi: { sky: 0x8a86b4, ground: 0xa87a60, intensity: 0.75 },
+    fog: { color: 0xb88870, density: 0.006 },
     doors: [{ id: 'toCorr', x: 6.4, z: 2.4, to: 'corridor', spawn: { x: -2.5, z: 0.5 }, label: '走廊', labelEn: 'CORRIDOR', mode: 'enter' }],
     obstacles,
     notebook: { mesh: note, glint, pos: new THREE.Vector3(yuki.x, 0.8, yuki.z + 0.5) },
@@ -632,7 +642,7 @@ export function buildLibrary(res) {
   wall.position.z = Z - 0.3;
   wall.castShadow = wall.receiveShadow = true;
   group.add(wall);
-  skyBackdrop(group, res.sky2, { z: -14, w: 60, h: 26, y: 7, boost: 1.2 });
+  skyBackdrop(group, res.sky2, { z: -14, w: 60, h: 26, y: 7, boost: 0.9 });
 
   // tall shelves along the back wall, full of books (instanced)
   const booksAtlas = CA.libraryBooks(9);
@@ -755,7 +765,7 @@ export function buildLibrary(res) {
   // shafts from the high windows + dust
   const sunDir = new THREE.Vector3(0.35, -0.7, 1).normalize();
   const shafts = hiWins.map((x) => {
-    const s = createShaft({ from: new THREE.Vector3(x, 3.9, Z), dir: sunDir, length: 6.5, width: 1.8, color: 0xffb070, opacity: 0.08 });
+    const s = createShaft({ from: new THREE.Vector3(x, 3.9, Z), dir: sunDir, length: 6, width: 1.6, color: 0xffb070, opacity: 0.05 });
     group.add(s);
     return s;
   });
@@ -776,9 +786,9 @@ export function buildLibrary(res) {
     cam: { y: 2.3, z: 8.6, lookY: 1.35, lookZ: -1.4, fov: 34, xMin: X0 + 4.5, xMax: X1 - 4.5, dist: 9 },
     floor: 'wood',
     sunDir,
-    sun: { color: 0xff9e5a, intensity: 3.2 },
+    sun: { color: 0xff9e5a, intensity: 2.5 },
     hemi: { sky: 0x6a6490, ground: 0x7a5040, intensity: 0.55 },
-    fog: { color: 0x5a4250, density: 0.02 },
+    fog: { color: 0x3a2c34, density: 0.012 },
     doors: [
       { id: 'toCorr', x: X0 + 1.4, z: 0.9, to: 'corridor', spawn: { x: 15.2, z: 0 }, label: '走廊', labelEn: 'CORRIDOR', mode: 'enter' },
       { id: 'archive', x: X1 - 0.6, z: -0.4, special: 'archive', label: '資料室', labelEn: 'OLD ARCHIVE ROOM', mode: 'enter' },

@@ -85,6 +85,18 @@ export class GameManager {
     requestAnimationFrame(this.loop);
 
     await this.assets.loadFonts();
+    const direct = new URLSearchParams(window.location.search).get('scene');
+    if (direct && direct !== 'lobby' && this.scenes.registry[direct]) {
+      // developer / QA shortcut: jump straight into a scene
+      const sc = await this.scenes.load(direct, {});
+      this.scenes.activate(sc, direct);
+      this.title.ready(() => {
+        this.audio.init();
+        this.audio.applyVolumes();
+        if (sc.afterReveal) sc.afterReveal();
+      });
+      return;
+    }
     const lobby = await this.scenes.load('lobby', { fromTitle: true }, (p) => this.title.setProgress(p));
     this.scenes.activate(lobby, 'lobby');
     this.post.set('dofBoost', 1, true);
