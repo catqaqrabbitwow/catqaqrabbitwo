@@ -145,9 +145,9 @@ export class LobbyUI {
 
     // ── main ticket
     const ticket = ui.button({
-      className: 'lb-ticket',
+      className: 'lb-ticket btn--nosheen',
       html: `
-        <span class="lb-ticket__paper paper--wine">
+        <span class="lb-ticket__paper paper--wine sheen-host">
           <span class="lb-ticket__main">
             <span class="lb-ticket__admit t-cond ls">ADMIT ONE · 通行票</span>
             <span class="lb-ticket__title t-title">Mini&nbsp;Game<br>Archive</span>
@@ -177,10 +177,10 @@ export class LobbyUI {
 
     // ── collection folder
     const folder = ui.button({
-      className: 'lb-folder',
+      className: 'lb-folder btn--nosheen',
       html: `
         <span class="lb-folder__tab paper--kraft t-cond">No. 07</span>
-        <span class="lb-folder__body paper--kraft">
+        <span class="lb-folder__body paper--kraft sheen-host">
           <span class="lb-folder__lines"></span>
           <span class="lb-folder__zh">收藏</span>
           <span class="lb-folder__en t-title">Collection</span>
@@ -195,11 +195,11 @@ export class LobbyUI {
 
     // ── archives photos
     const photos = ui.button({
-      className: 'lb-photos',
+      className: 'lb-photos btn--nosheen',
       html: `
         <span class="lb-photos__p lb-photos__p--3"></span>
         <span class="lb-photos__p lb-photos__p--2"></span>
-        <span class="lb-photos__p lb-photos__p--1">
+        <span class="lb-photos__p lb-photos__p--1 sheen-host">
           <span class="lb-photos__img halftone"></span>
           <span class="lb-photos__cap"><span class="lb-photos__zh">檔案</span><span class="t-cond ls">ARCHIVES</span></span>
           <span class="lb-photos__sub t-italic">records of the journey</span>

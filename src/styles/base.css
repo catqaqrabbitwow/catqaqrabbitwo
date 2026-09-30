@@ -393,6 +393,31 @@ button {
   background: linear-gradient(90deg, rgba(255, 246, 220, 0) 0%, rgba(255, 246, 220, 0.28) 45%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 246, 220, 0.2) 55%, rgba(255, 246, 220, 0) 100%);
   mix-blend-mode: soft-light;
   pointer-events: none;
+  opacity: var(--frame);
+}
+
+/* sheen clipped inside paper for buttons whose body must overflow */
+.sheen-host {
+  position: relative;
+  overflow: hidden;
+}
+
+.sheen-host::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: 0;
+  width: 38%;
+  transform: translateX(var(--sheen)) skewX(-18deg);
+  background: linear-gradient(90deg, rgba(255, 246, 220, 0) 0%, rgba(255, 246, 220, 0.28) 45%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 246, 220, 0.2) 55%, rgba(255, 246, 220, 0) 100%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  opacity: var(--frame);
+}
+
+.btn--nosheen .btn__sheen {
+  display: none;
 }
 
 .btn__frame {

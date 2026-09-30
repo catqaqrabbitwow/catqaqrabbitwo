@@ -36,7 +36,7 @@ export function buildLobbyRoom(scene, assets) {
     black: std({ color: 0x141312, roughness: 0.4, metalness: 0.2 }),
     leatherGreen: std({ map: T.leatherTexture('#284236'), roughness: 0.6 }),
     leatherBrown: std({ map: T.leatherTexture('#4a2c1e', 512, 512, 3), roughness: 0.55 }),
-    velvet: std({ color: 0x5e1a22, roughness: 0.95, side: THREE.DoubleSide }),
+    velvet: new THREE.MeshPhysicalMaterial({ color: 0x5a1820, roughness: 1, metalness: 0, sheen: 1, sheenColor: new THREE.Color(0xc0606a), sheenRoughness: 0.6, envMapIntensity: 0 }),
     olive: std({ color: 0x46503f, roughness: 0.5, metalness: 0.45 }),
     paper: std({ map: T.paperTex(1), roughness: 0.95 }),
     cork: std({ map: T.corkTexture(), roughness: 1 }),
@@ -166,7 +166,7 @@ export function buildLobbyRoom(scene, assets) {
   };
   const curtains = [];
   for (const side of [-1, 1]) {
-    const c = add(new THREE.Mesh(curtainGeo(), M.velvet), scene);
+    const c = add(new THREE.Mesh(curtainGeo(), M.velvet), scene, { cast: true, receive: false });
     c.position.set(WX + side * (WW / 2 + 0.38), 2.33, -2.18);
     c.userData.side = side;
     curtains.push(c);

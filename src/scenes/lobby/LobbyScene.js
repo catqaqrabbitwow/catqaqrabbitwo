@@ -49,7 +49,7 @@ export class LobbyScene extends BaseScene {
     this.camera.position.copy(this.camBase);
     this.focusBase = 6.15;
     this.postProfile = {
-      exposure: 1.02,
+      exposure: 1.1,
       bloom: { strength: 0.5, radius: 0.72, threshold: 0.78 },
       dof: { focus: this.focusBase, range: 2.4, maxBlur: 7, near: 1.4 },
       grade: {
@@ -95,10 +95,10 @@ export class LobbyScene extends BaseScene {
     progress(0.65);
 
     // archivist character
-    this.archivist = new Humanoid(ARCHIVIST_CFG, { ppm: 470, scale: 1.06, rimColor: 0xa9c4dc, rimStrength: 0.85, blobRadius: 0.55, blobOpacity: 0.6 });
+    this.archivist = new Humanoid(ARCHIVIST_CFG, { ppm: 470, scale: 1.06, rimColor: 0xa9c4dc, rimStrength: 0.38, blobRadius: 0.55, blobOpacity: 0.6 });
     this.archivist.root.position.set(-0.42, 0, -0.35);
     this.archivist.setFacing(1);
-    this.archivist.rig.setRimSide(0, 0.7);
+    this.archivist.rig.setRimSide(-1, 0.45);
     const u = this.archivist.rig.material.uniforms;
     u.ambient.value.setRGB(0.6, 0.57, 0.56);
     u.keyColor.value.set(0xffb070);
@@ -178,7 +178,7 @@ export class LobbyScene extends BaseScene {
     this.tvLight.position.set(3.1, 0.9, -0.1);
     s.add(this.tvLight);
 
-    const fill = new THREE.PointLight(0xffd0a8, 5.5, 14, 1.6);
+    const fill = new THREE.PointLight(0xffd0a8, 9, 14, 1.5);
     fill.position.set(-1.2, 2.4, 3.8);
     s.add(fill);
     this.fill = fill;

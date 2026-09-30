@@ -17,6 +17,7 @@ import './styles/panels.css';
 import './styles/transitions.css';
 import './styles/lobby.css';
 import './styles/game.css';
+import './styles/archive.css';
 
 import gsap from 'gsap';
 import { GameManager } from './core/GameManager.js';

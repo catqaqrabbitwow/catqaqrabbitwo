@@ -341,8 +341,8 @@ export class PaperRig {
     const up = this.rimUp ?? 0.6;
     // mirrored rigs swap texture-left / texture-right
     const s = side * (this.facing || 1);
-    const left = side === 0 ? 0.65 : s < 0 ? 1 : 0.12;
-    const right = side === 0 ? 0.65 : s > 0 ? 1 : 0.12;
+    const left = side === 0 ? 0.65 : s < 0 ? 1 : 0;
+    const right = side === 0 ? 0.65 : s > 0 ? 1 : 0;
     this.material.uniforms.rimWeights.value.set(left, right, up);
   }
 
