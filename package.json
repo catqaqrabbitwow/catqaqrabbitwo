@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:single": "node tools/subset-tc-fonts.mjs && vite build --mode single"
   },
   "dependencies": {
     "@fontsource/barlow-condensed": "^5.3.0",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "playwright": "^1.56.1",
-    "vite": "^8.3.1"
+    "vite": "^8.3.1",
+    "vite-plugin-singlefile": "^2.3.3"
   }
 }

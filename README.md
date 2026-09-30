@@ -9,7 +9,14 @@ A Three.js mini-game platform. The lobby is a 2.5D "time traveller's private arc
 
 All art, UI textures, character sprites, sound effects and music are **generated at runtime** (Canvas 2D painting, GLSL, Web Audio synthesis). The project contains no external images, audio or models, and no assets taken from any commercial game.
 
-## Running
+## Double-click to play (no install needed)
+
+Double-click **`Play-Chrono-Archive.html`** in the root folder to open it in Chrome / Edge and play.
+This single file already contains every asset: all code, all fonts, all hand-painted textures, and all sound effects and music (these are generated live when the game runs). No internet connection, Node.js or server is needed.
+
+To rebuild this file after changing the code: `npm run build:single`, then copy `dist-single/index.html` over it.
+
+## Running (development)
 
 ```bash
 npm install

@@ -3,3 +3,5 @@ dist
 tools/shots
 *.log
 downloads
+dist-single
+src/styles/generated

@@ -121,7 +121,7 @@ export function buildForest(scene) {
     vertexShader: /* glsl */ `
       varying vec2 vUv; varying vec3 vW;
       #include <fog_pars_vertex>
-      void main(){ vUv = uv; vec4 mv = modelViewMatrix * vec4(position,1.0); vW = (modelMatrix*vec4(position,1.0)).xyz; gl_Position = projectionMatrix * mv;
+      void main(){ vUv = uv; vec4 mvPosition = modelViewMatrix * vec4(position,1.0); vW = (modelMatrix*vec4(position,1.0)).xyz; gl_Position = projectionMatrix * mvPosition;
       #include <fog_vertex>
       }`,
     fragmentShader: /* glsl */ `
