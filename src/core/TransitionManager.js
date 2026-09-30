@@ -102,9 +102,10 @@ export class TransitionManager {
             </div>`,
           min: 2000,
           anim: (el) => {
-            gsap.fromTo(el.querySelector('.txb__flip'), { rotationY: 0 }, { rotationY: -180, duration: 1.4, delay: 0.2, ease: 'power2.inOut', onStart: () => this.game.audio.play('page') });
+            const flip = el.querySelector('.txb__flip');
+            gsap.fromTo(flip, { rotationY: 0 }, { rotationY: -180, duration: 1.4, delay: 0.2, ease: 'power2.inOut', onStart: () => this.game.audio.play('page'), onComplete: () => gsap.to(flip, { opacity: 0, duration: 0.25 }) });
             gsap.fromTo(el.querySelector('.txb__page--r img'), { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, delay: 0.8, duration: 1.4, ease: 'power2.out' });
-            gsap.fromTo(el.querySelectorAll('.txb__page--l > *'), { opacity: 0, y: 8 }, { opacity: 1, y: 0, stagger: 0.12, delay: 0.3, duration: 0.5 });
+            gsap.fromTo(el.querySelectorAll('.txb__page--l > *'), { opacity: 0, y: 8 }, { opacity: 1, y: 0, stagger: 0.12, delay: 1.5, duration: 0.5 });
           },
         };
       case 'lobby':

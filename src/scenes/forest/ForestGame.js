@@ -129,6 +129,12 @@ export class ForestGame extends BaseScene {
     this.elite.onDamaged = () => this._bossBar();
     this.slimes.push(this.elite);
     this.seedTex = SPRITES.seed();
+    this.seedLights = [0, 1, 2].map(() => {
+      const L = new THREE.PointLight(0xcfe8ff, 0, 4, 2);
+      L.position.set(0, -50, 0);
+      this.scene.add(L);
+      return L;
+    });
   }
 
   _markTex() {
@@ -353,9 +359,11 @@ export class ForestGame extends BaseScene {
       m.scale.setScalar(0.9);
       m.position.set(s.pos.x, 0.6, s.pos.z);
       this.scene.add(m);
-      const L = new THREE.PointLight(0xcfe8ff, 4, 4, 2);
-      m.add(L);
-      this.seeds.push({ m, t: 0 });
+      // reuse a pre-allocated light (adding lights at runtime forces shader recompiles)
+      const L = this.seedLights.find((l) => !l.userData.used) || this.seedLights[0];
+      L.userData.used = true;
+      L.intensity = 4;
+      this.seeds.push({ m, t: 0, L });
       g.audio.play('interact');
     }
   }
@@ -363,6 +371,8 @@ export class ForestGame extends BaseScene {
   _collectSeed(sd) {
     const g = this.game;
     this.scene.remove(sd.m);
+    sd.L.intensity = 0;
+    sd.L.userData.used = false;
     g.audio.play('pickup');
     this.fx.particles.burst(sd.m.position.clone(), { count: 40, colors: [0xfffbe8, 0xcfe8ff], speed: [1, 4], life: [0.4, 0.9], size: [0.05, 0.1], drag: 2, gravity: -2, shape: 0 });
     this._setSeeds(this.seedCount + 1);
@@ -503,7 +513,7 @@ export class ForestGame extends BaseScene {
     // slimes
     let anyAggro = false;
     for (const s of this.slimes) {
-      if (!s.root.visible) continue;
+      if (s.gone) continue;
       s.update(dt, real);
       if (s.alive && s.aggro) anyAggro = true;
       s.rig.material.uniforms.ambient.value.setRGB(0.85, 0.9, 1.0);
@@ -527,6 +537,7 @@ export class ForestGame extends BaseScene {
       const sd = this.seeds[i];
       sd.t += real;
       sd.m.position.y = 0.6 + Math.sin(sd.t * 3) * 0.12;
+      sd.L.position.copy(sd.m.position);
       sd.m.material.rotation = sd.t;
       if (Math.hypot(p.pos.x - sd.m.position.x, p.pos.z - sd.m.position.z) < 1.0) {
         this.seeds.splice(i, 1);

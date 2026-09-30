@@ -97,9 +97,6 @@ export class Slime {
     g.time.requestHitStop(this.elite ? 200 : 90);
     g.shake(this.elite ? 0.4 : 0.14, this.elite ? 0.6 : 0.3);
     this.punch(1.6, 0.4);
-    this.rig.material.transparent = true;
-    this.rig.material.depthWrite = false;
-    this.rig.material.needsUpdate = true;
     this.fx.particles.burst(new THREE.Vector3(this.pos.x, 0.4, this.pos.z), { count: this.elite ? 160 : 60, colors: this.elite ? [0xc08aff, 0xf0d8ff, 0x6a2aa0, 0xffffff] : [0x8ae070, 0xd8ffc8, 0x3a8a3a], speed: [2, this.elite ? 12 : 8], dir: new THREE.Vector3(0, 1, 0), spread: 1.4, life: [0.4, 1.1], size: [0.08, this.elite ? 0.3 : 0.2], gravity: 9, drag: 1.5, shape: 1, jitter: this.elite ? 1.5 : 0.5 });
     this.fx.ring.spawn(this.pos, this.elite ? 5 : 2, this.elite ? 0xb070ff : 0x9aff80, 0.5);
     g.save.stat('slimesDefeated');
@@ -123,8 +120,18 @@ export class Slime {
     if (this.state === 'dead') {
       const k = Math.min(1, this.t / 0.35);
       this.pivot.scale.set(this.sq.x * (1 + k * 0.6), this.sq.y * (1 - k), 1);
-      u.opacity.value = 1 - k;
-      if (k >= 1) this.root.visible = false;
+      // dissolve instead of switching to a transparent material (no shader recompile)
+      u.dissolve.value = k;
+      u.dissolveColor.value.set(this.elite ? 0xc08aff : 0xb0ff90);
+      if (this.glow) this.glow.intensity = 0;
+      if (this.eliteLight) this.eliteLight.intensity *= 0.9;
+      if (k >= 1 && !this.gone) {
+        // hide meshes only — lights stay in the scene so the light count never changes
+        this.gone = true;
+        this.pivot.visible = false;
+        this.blob.visible = false;
+        if (this.eliteLight) this.eliteLight.intensity = 0;
+      }
       return;
     }
     const p = this.player;

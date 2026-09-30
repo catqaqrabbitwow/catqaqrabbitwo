@@ -14,6 +14,8 @@ for (const a of actions) {
   if (a.rclick) await page.mouse.click(a.rclick[0], a.rclick[1], { button: 'right' });
   if (a.move) await page.mouse.move(a.move[0], a.move[1], { steps: 4 });
   if (a.key) await page.keyboard.press(a.key);
+  if (a.sel) await page.click(a.sel, { timeout: 60000 });
+  if (a.hover) await page.hover(a.hover, { timeout: 60000 });
   if (a.down) await page.keyboard.down(a.down);
   if (a.up) await page.keyboard.up(a.up);
   if (a.eval) logs.push('[eval] ' + JSON.stringify(await page.evaluate(a.eval)));

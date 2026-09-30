@@ -57,20 +57,30 @@ export class ShadowEnemy {
     this.radius = 0.35;
     this.team = 'enemy';
     this.hitCd = 0;
-    this.root.visible = false;
+    this.setShown(false);
     this.h.rig.material.uniforms.dissolveColor.value.set(0xff3a30);
     this.unreg = game.combat.register(this);
   }
 
   emerge(x, z) {
     this.pos.set(x, 0, z);
-    this.root.visible = true;
+    this.setShown(true);
     this.alive = true;
     this.state = 'emerge';
     this.t = 0;
     this.h.rig.material.uniforms.dissolve.value = 1;
     this.game.audio.play('shadow_spawn', { force: true });
     this.fx.particles.burst(new THREE.Vector3(x, 0.1, z), { count: 40, colors: [0x0a0808, 0x2a0a0a, 0xff3a30], speed: [0.5, 2.5], dir: new THREE.Vector3(0, 1, 0), spread: 0.8, life: [0.6, 1.3], size: [0.06, 0.16], drag: 1.5, shape: 0 });
+  }
+
+  /** Hide/show the meshes but keep the light in the scene (stable light count, no recompiles). */
+  setShown(v) {
+    this.shown = v;
+    this.h.rig.root.visible = v;
+    if (this.h.blob) this.h.blob.visible = v;
+    this.core.visible = v;
+    this.aura.visible = v;
+    if (!v) this.coreLight.intensity = 0;
   }
 
   onHit(hit) {
@@ -117,7 +127,7 @@ export class ShadowEnemy {
     const sc = this.root.scale;
     sc.x += (1 - sc.x) * Math.min(1, dt * 12);
     sc.y += (1 - sc.y) * Math.min(1, dt * 12);
-    if (!this.root.visible) return;
+    if (!this.shown) return;
     this.t += dt;
     const p = this.player;
     const dx = p.pos.x - this.pos.x;
@@ -199,7 +209,7 @@ export class ShadowEnemy {
         this.core.material.opacity = 1 - this.t / 0.5;
         this.coreLight.intensity = Math.max(0, 3 - this.t * 6);
         this.h.rig.root.position.y = this.t * 0.2;
-        if (this.t > 0.9) this.root.visible = false;
+        if (this.t > 0.9) this.setShown(false);
         break;
       default:
         break;

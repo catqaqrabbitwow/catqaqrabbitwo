@@ -368,6 +368,8 @@ export class LobbyScene extends BaseScene {
     this.lineIdx++;
     this.talkFocus = true;
     this.archivist.play('nod');
+    // let the conversation own the frame: the collage steps back
+    if (this.ui) gsap.to(this.ui.el, { opacity: 0.18, duration: 0.5, ease: 'power2.out' });
     await g.dialogue.start(
       lines.map((l) => ({ who: '檔案管理員', whoEn: 'THE ARCHIVIST', text: l.text, pitch: 700 })),
       {
@@ -375,6 +377,7 @@ export class LobbyScene extends BaseScene {
         onEnd: () => {
           this.archivist.setTalking(false);
           this.talkFocus = false;
+          if (this.ui) gsap.to(this.ui.el, { opacity: 1, duration: 0.6, ease: 'power2.out' });
         },
       },
     );

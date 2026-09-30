@@ -644,7 +644,7 @@ export class CampusGame extends BaseScene {
     if (a.id === 'library') {
       for (const e of this.enemies) {
         e.update(dt, real);
-        if (e.root.visible) {
+        if (e.shown) {
           const u = e.h.rig.material.uniforms;
           u.ambient.value.setRGB(0.5, 0.45, 0.5);
         }

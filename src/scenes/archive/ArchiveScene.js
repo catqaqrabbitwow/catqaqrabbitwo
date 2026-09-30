@@ -146,10 +146,9 @@ export class ArchiveScene extends BaseScene {
     bTop.position.y = 0.112;
     bTop.receiveShadow = true;
     book.add(bTop);
-    const spine = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 1.8, 16, 1, false, 0, Math.PI), cloth);
+    const spine = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 1.8, 16, 1, false, Math.PI, Math.PI), cloth);
     spine.rotation.x = Math.PI / 2;
-    spine.rotation.z = Math.PI / 2;
-    spine.position.x = -0.68;
+    spine.position.x = -0.66;
     book.add(spine);
     const ribbon = new THREE.Mesh(new THREE.PlaneGeometry(0.05, 0.5), new THREE.MeshStandardMaterial({ color: 0x8a1f26, roughness: 0.6, side: THREE.DoubleSide }));
     ribbon.rotation.x = -Math.PI / 2 + 0.1;

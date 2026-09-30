@@ -1,4 +1,4 @@
-import { canvas, mottle, grain, paperDetail, rng, halftoneDots } from './painter.js';
+import { canvas, mottle, grain, paperDetail, rng, halftoneDots, makeNoise } from './painter.js';
 
 /**
  * Generates the tactile textures used by the DOM interface (paper fibre,
@@ -71,6 +71,26 @@ export function buildUITextures() {
     out.scratches = c.toDataURL('image/png');
   }
 
+  // rubber-stamp mask: mostly solid ink with worn specks and uneven pressure
+  {
+    const { c, g, w, h } = canvas(256, 256);
+    const img = g.createImageData(w, h);
+    const nz = makeNoise(31);
+    const r = rng(33);
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const v = nz.fbm(x / 40, y / 40, 3, 6.4);
+        let a = 0.55 + v * 0.6;
+        if (r() < 0.06) a *= 0.2;
+        const i = (y * w + x) * 4;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = 255;
+        img.data[i + 3] = Math.max(0, Math.min(1, a)) * 255;
+      }
+    }
+    g.putImageData(img, 0, 0);
+    out.stamp = c.toDataURL('image/png');
+  }
+
   // deco sunburst emblem (used on title + stamps)
   const root = document.documentElement.style;
   root.setProperty('--tex-ivory', `url(${out.paperIvory})`);
@@ -82,5 +102,6 @@ export function buildUITextures() {
   root.setProperty('--tex-grain', `url(${out.grain})`);
   root.setProperty('--tex-halftone', `url(${out.halftone})`);
   root.setProperty('--tex-scratch', `url(${out.scratches})`);
+  root.setProperty('--tex-stamp', `url(${out.stamp})`);
   return out;
 }

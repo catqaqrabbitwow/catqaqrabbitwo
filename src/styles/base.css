@@ -559,10 +559,10 @@ button {
   padding: 0.4rem 1rem;
   opacity: 0.72;
   mix-blend-mode: multiply;
-  -webkit-mask-image: var(--tex-grain);
-  mask-image: var(--tex-grain);
-  -webkit-mask-size: 12rem;
-  mask-size: 12rem;
+  -webkit-mask-image: var(--tex-stamp);
+  mask-image: var(--tex-stamp);
+  -webkit-mask-size: 16rem;
+  mask-size: 16rem;
   pointer-events: none;
 }
 
